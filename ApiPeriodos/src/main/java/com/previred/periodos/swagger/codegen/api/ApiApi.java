@@ -25,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import javax.ws.rs.HeaderParam;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -64,6 +66,33 @@ public interface ApiApi {
             }
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default ApiApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @ApiOperation(value = "Lista de periodos a procesar", nickname = "periodosPerdidos", notes = "", response = Periodo.class, tags = {
+            "periodosPerdidos", })
+    @ApiResponses(value = {
+    @ApiResponse(code = 200, message = "Periodo y lista de fechas - periodos Perdidos", response = Periodo.class) })
+    @RequestMapping(value = "/api/periodosPerdidos", produces = { "application/json" }, method = RequestMethod.GET)
+    default ResponseEntity<Periodo> periodosPerdidos(
+        @HeaderParam("fechaInicio") final String fechaInicio,
+        @HeaderParam("fechaFin") final String fechaFin
+        ) {
+        if (getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue(
+                            "{  \"fechaCreacion\" : \"2000-01-23\",  \"fechas\" : [ \"2000-01-23\", \"2000-01-23\" ],  \"id\" : 0,  \"fechaFin\" : \"2000-01-23\"}",
+                            Periodo.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        } else {
+            log.warn(
+                    "ObjectMapper or HttpServletRequest not configured in default ApiApi interface so no example is generated");
         }
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }

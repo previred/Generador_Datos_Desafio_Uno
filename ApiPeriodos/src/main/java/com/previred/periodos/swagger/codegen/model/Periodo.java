@@ -31,6 +31,10 @@ public class Periodo   {
   @Valid
   private List<LocalDate> fechas = null;
 
+  @JsonProperty("fechasFaltantes")
+  @Valid
+  private List<LocalDate> fechasFaltantes = null;
+
   public Periodo id(Long id) {
     this.id = id;
     return this;
@@ -122,6 +126,21 @@ public class Periodo   {
     this.fechas = fechas;
   }
 
+  /**
+   * Get fechasFaltanes
+   * @return fechasFaltantes
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<LocalDate> getFechasFaltantes() {
+    return fechasFaltantes;
+  }
+
+  public void setFechasFaltantes(List<LocalDate> fechasFaltantes) {
+    this.fechasFaltantes = fechasFaltantes;
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -135,12 +154,13 @@ public class Periodo   {
     return Objects.equals(this.id, periodo.id) &&
         Objects.equals(this.fechaCreacion, periodo.fechaCreacion) &&
         Objects.equals(this.fechaFin, periodo.fechaFin) &&
-        Objects.equals(this.fechas, periodo.fechas);
+        Objects.equals(this.fechas, periodo.fechas) &&
+        Objects.equals(this.fechasFaltantes, periodo.fechasFaltantes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, fechaCreacion, fechaFin, fechas);
+    return Objects.hash(id, fechaCreacion, fechaFin, fechas, fechasFaltantes);
   }
 
   @Override
@@ -152,6 +172,7 @@ public class Periodo   {
     sb.append("    fechaCreacion: ").append(toIndentedString(fechaCreacion)).append("\n");
     sb.append("    fechaFin: ").append(toIndentedString(fechaFin)).append("\n");
     sb.append("    fechas: ").append(toIndentedString(fechas)).append("\n");
+    sb.append("    fechasFaltantes: ").append(toIndentedString(fechasFaltantes)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -166,5 +187,9 @@ public class Periodo   {
     }
     return o.toString().replace("\n", "\n    ");
   }
+
+public static Periodo getPeriodos() {
+	return null;
+}
 }
 

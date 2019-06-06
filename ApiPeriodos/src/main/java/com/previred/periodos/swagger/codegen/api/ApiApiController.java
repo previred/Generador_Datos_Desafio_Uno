@@ -1,8 +1,11 @@
 package com.previred.periodos.swagger.codegen.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.previred.periodos.servicio.PeriodosPerdidosService;
 import com.previred.periodos.servicio.PeriodosService;
 import com.previred.periodos.swagger.codegen.model.Periodo;
+
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +23,9 @@ public class ApiApiController implements ApiApi {
     
     @Autowired
     private PeriodosService periodosService;
+
+    @Autowired
+    private PeriodosPerdidosService periodosPerdidosService;
 
     @org.springframework.beans.factory.annotation.Autowired
     public ApiApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -43,6 +49,28 @@ public class ApiApiController implements ApiApi {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
                     Periodo detalle = periodosService.getPeriodos();
+                    List<LocalDate> dates = detalle.getFechas();
+                    int x = dates.size();
+                    detalle.setId((long) x);
+                    ResponseEntity<Periodo> respuesta = new ResponseEntity<>(detalle, HttpStatus.OK);
+                    return respuesta;
+                } catch (Exception e) {
+                    log.error("Couldn't serialize response for content type application/xml", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default DefaultApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @Override
+    public ResponseEntity<Periodo> periodosPerdidos(String fechaInicio, String fechFin) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    Periodo detalle = periodosPerdidosService.getPeriodosPerdidos(fechaInicio, fechFin);
                     ResponseEntity<Periodo> respuesta = new ResponseEntity<>(detalle, HttpStatus.OK);
                     return respuesta;
                 } catch (Exception e) {
