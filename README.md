@@ -18,8 +18,12 @@ Debe estar disponible el puerto *8080* en el PC donde se ejecute esta API
 
 # Generador Datos Desafio
 
-*Nota*: no olvifar un rago de fechas muy acotados, de lo contrario modificar ls variables de la PeriodosPerdidosSerice.java MAX - MIN
-
+*Nota*: no olvidar un rago de fechas no muy acotados, de lo contrario modificar ls variables de la PeriodosPerdidosSerice.java MAX - MIN
+  Ejemplo:
+  {
+      "fechaCreacion": "2010-01-01",
+      "fechaFin": "2019-01-01",
+  }
 Este proyecto expone un API REST que entrega la siguiente información:
 
 *id*: identificador
