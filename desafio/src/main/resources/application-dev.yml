@@ -1,0 +1,15 @@
+logging:
+  level:
+    ROOT: INFO
+    cl.kubos.mslideres:
+          controller: INFO
+          service.impl: INFO
+
+#Config
+server:
+  context-path: /api/ms-desafio
+  port: 8020
+
+errores:
+  codigosError:
+    EX001: Error al Obtener Fechas
