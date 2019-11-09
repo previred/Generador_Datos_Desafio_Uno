@@ -80,9 +80,9 @@ Debe estar disponible el puerto *8084* en el PC donde se ejecutará el servicio
 # Uso de Python para la ejecucion del programa
 Adicional a la solicion realizada, al iniciar la aplicacion se expone mediante un servicio REST un metodo para la generacion mediante POST (recibiendo un JSON como estrada), de manera de que pueda ser probada la funcionalidad a través de python o realizando prueba con alguna herramienta de testing. Use para las pruebas SoapUI.
 
-Para ejecutar el python se debe descargar el archivo (ubicado eb la carpeta resources) en el computador donde se probará la funcionalidad. Este debe tener instalado Python.
+Para ejecutar el python se debe descargar el archivo (ubicado eb la carpeta resources) en el computador donde se probará la funcionalidad (tengo pytho 3.8.0). Este debe tener instalado Python.
 -Ejecutar el comando
 ```bash
-python main.py
+python3 main.py
 ```
 El script puthon contiene la llamada al Generador de Codigos y con la salida JSON realiza llamada POST al servicio REST, y se obtendrá como salida el JSON inicial junto al JSON final resultante.
