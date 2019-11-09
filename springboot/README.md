@@ -80,7 +80,7 @@ Debe estar disponible el puerto *8084* en el PC donde se ejecutará el servicio
 # Uso de Python para la ejecucion del programa
 Adicional a la solicion realizada, al iniciar la aplicacion se expone mediante un servicio REST un metodo para la generacion mediante POST (recibiendo un JSON como estrada), de manera de que pueda ser probada la funcionalidad a través de python o realizando prueba con alguna herramienta de testing. Use para las pruebas SoapUI.
 
-Para ejecutar el python se debe descargar el archivo en el computador donde se probará la funcionalidad. Este debe tener instalado Python.
+Para ejecutar el python se debe descargar el archivo (ubicado eb la carpeta resources) en el computador donde se probará la funcionalidad. Este debe tener instalado Python.
 -Ejecutar el comando
 ```bash
 python main.py
