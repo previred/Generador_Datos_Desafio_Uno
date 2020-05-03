@@ -1,6 +1,7 @@
 package com.previred.periodos.servicio;
 
 import com.previred.periodos.swagger.codegen.model.Periodo;
+import com.previred.periodos.swagger.codegen.model.PeriodoFaltantes;
 import com.previred.periodos.tools.RandomDate;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,5 +50,34 @@ public class PeriodosService {
                 .collect(Collectors.toList()));
 
         return periodo;
+    }
+
+
+    public PeriodoFaltantes getPeriodosFaltantes(){
+        Periodo periodo = getPeriodos();
+        PeriodoFaltantes periodoFaltantes = new PeriodoFaltantes();
+        periodoFaltantes.setId(periodo.getId());
+        periodoFaltantes.setFechaCreacion(periodo.getFechaCreacion());
+        periodoFaltantes.setFechaFin(periodo.getFechaFin());
+        periodoFaltantes.setFechas(periodo.getFechas());
+
+        Set<LocalDate> fechasFaltantes = new HashSet();
+        for (LocalDate date = periodo.getFechaCreacion(); date.isBefore(periodo.getFechaFin()); date = date.plusMonths(1)) {
+            Boolean exist = false;
+            for (LocalDate fecha : periodo.getFechas()) {
+                if (fecha.compareTo(date) == 0){
+                    exist = true;
+                }
+            }
+            if (Boolean.FALSE.equals(exist)){
+                fechasFaltantes.add(date);
+            }
+        }
+
+        periodoFaltantes.setFechasFaltantes(fechasFaltantes.stream()
+                .sorted()
+                .collect(Collectors.toList()));
+
+        return periodoFaltantes;
     }
 }

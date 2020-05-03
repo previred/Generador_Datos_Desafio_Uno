@@ -7,6 +7,7 @@ package com.previred.periodos.swagger.codegen.api;
 
 import com.previred.periodos.swagger.codegen.model.Periodo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.previred.periodos.swagger.codegen.model.PeriodoFaltantes;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,29 @@ public interface ApiApi {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
                     return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"fechaCreacion\" : \"2000-01-23\",  \"fechas\" : [ \"2000-01-23\", \"2000-01-23\" ],  \"id\" : 0,  \"fechaFin\" : \"2000-01-23\"}", Periodo.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default ApiApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+
+    @ApiOperation(value = "Lista de periodos a procesar incluidos los faltantes", nickname = "periodosFaltantes", notes = "", response = Periodo.class, tags={ "periodosFaltantes", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Periodo y lista de fechas incluidas las faltantes", response = PeriodoFaltantes.class) })
+    @RequestMapping(value = "/apiTest",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    default ResponseEntity<PeriodoFaltantes> periodosFaltantes() {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"fechaCreacion\" : \"2000-01-23\",  \"fechas\" : [ \"2000-01-23\", \"2000-01-23\" ],  \"id\" : 0,  \"fechaFin\" : \"2000-01-23\"}", PeriodoFaltantes.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
