@@ -26,7 +26,7 @@ La documentación swagger del API (una vez que se levanta el API) queda disponib
 
 http://127.0.0.1:8081/periodos/swagger-ui.html#/
 
-Para consumir el servicio se debe invocar la siguiente URL
+Para consumir el servicio se debe invocar la siguiente URL:
 
 ```bash
 curl -X GET --header 'Accept: application/json' 'http://127.0.0.1:8081/periodos/missing'
