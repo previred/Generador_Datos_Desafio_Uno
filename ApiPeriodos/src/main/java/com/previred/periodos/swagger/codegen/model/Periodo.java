@@ -30,11 +30,12 @@ public class Periodo   {
   @JsonProperty("fechas")
   @Valid
   private List<LocalDate> fechas = null;
+  
+  @JsonProperty("fechasFaltantes")
+  @Valid
+  private List<LocalDate> fechasFaltantes = null;
+  
 
-  public Periodo id(Long id) {
-    this.id = id;
-    return this;
-  }
 
   /**
    * Get id
@@ -122,6 +123,20 @@ public class Periodo   {
     this.fechas = fechas;
   }
 
+  
+  public List<LocalDate> getFechasFaltantes() {
+	return fechasFaltantes;
+}
+
+public void setFechasFaltantes(List<LocalDate> fechasFaltantes) {
+	this.fechasFaltantes = fechasFaltantes;
+}
+
+public Periodo id(Long id) {
+    this.id = id;
+    return this;
+  }
+  
 
   @Override
   public boolean equals(java.lang.Object o) {

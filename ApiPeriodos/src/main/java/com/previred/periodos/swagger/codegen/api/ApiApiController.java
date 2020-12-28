@@ -5,6 +5,11 @@ import com.previred.periodos.servicio.PeriodosService;
 import com.previred.periodos.swagger.codegen.model.Periodo;
 import java.util.List;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,23 +41,20 @@ public class ApiApiController implements ApiApi {
     public Optional<HttpServletRequest> getRequest() {
         return Optional.ofNullable(request);
     }
-
-    @Override
-    public ResponseEntity<Periodo> periodos() {
-        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
-            if (getAcceptHeader().get().contains("application/json")) {
-                try {
-                    Periodo detalle = periodosService.getPeriodos();
-                    ResponseEntity<Periodo> respuesta = new ResponseEntity<>(detalle, HttpStatus.OK);
-                    return respuesta;
-                } catch (Exception e) {
-                    log.error("Couldn't serialize response for content type application/xml", e);
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            }
-        } else {
-            log.warn("ObjectMapper or HttpServletRequest not configured in default DefaultApi interface so no example is generated");
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
+   
+    // CONTROLADOR JQUEZADA
+    
+    @RequestMapping(value = "/periodos",
+            produces = { "application/json" }, 
+            method = RequestMethod.GET)
+	public ResponseEntity<Periodo> fechas() throws Exception {   	    
+			log.debug("Controlador que obtiene fechas aleatoreas y totales con faltantes");
+		try {
+			Periodo per = periodosService.getPeriodos();
+			return new ResponseEntity<Periodo>(per, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("Couldn't serialize response for content type application/json", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

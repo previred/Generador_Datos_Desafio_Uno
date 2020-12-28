@@ -47,7 +47,13 @@ public class PeriodosService {
         periodo.setFechas(fechas.stream()
                 .sorted()
                 .collect(Collectors.toList()));
-
+        
+       // Faltantes y totales
+        
+        periodo.setFechasFaltantes(fechaPeriodos.range());
+        
         return periodo;
     }
+    
+    
 }

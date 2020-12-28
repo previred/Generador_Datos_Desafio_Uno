@@ -5,15 +5,22 @@
  */
 package com.previred.periodos.swagger.codegen.api;
 
+import com.previred.periodos.servicio.PeriodosService;
 import com.previred.periodos.swagger.codegen.model.Periodo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.net.MediaType;
+
 import io.swagger.annotations.*;
+import springfox.documentation.service.ResponseMessage;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +33,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Api(value = "api", description = "the api API")
 public interface ApiApi {
+	
 
     Logger log = LoggerFactory.getLogger(ApiApi.class);
+	Object periodosService = null;
 
     default Optional<ObjectMapper> getObjectMapper() {
         return Optional.empty();
@@ -45,6 +55,7 @@ public interface ApiApi {
     default Optional<String> getAcceptHeader() {
         return getRequest().map(r -> r.getHeader("Accept"));
     }
+    
 
     @ApiOperation(value = "Lista de periodos a procesar", nickname = "periodos", notes = "", response = Periodo.class, tags={ "periodos", })
     @ApiResponses(value = { 
@@ -67,5 +78,5 @@ public interface ApiApi {
         }
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
-
+    
 }

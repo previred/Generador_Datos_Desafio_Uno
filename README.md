@@ -78,3 +78,18 @@ java -jar .\swagger-codegen-cli.jar generate -i .\swagger\periodos.yaml -l sprin
 
 *Nota*:
 Esto creara toda la estructura de swagger y re-escribirá todas las clases que no estén declaradas en el archivo *.swagger-codegen-ignore*
+
+///
+
+SOLUCION DESAFIO  JQUEZADA
+***************************************************
+
+// SE AGREGO DEPENDENCIA javax.xml.bind 2.0 EN POM.XML
+
+// se agrega  campo fechasFaltantes para visualizar.
+
+// se agrega controlador que invoca servicio y se agrega un método nuevo que genera fechas segun un rango definido.
+
+* EL API ES DE PROTOOLO HTTP GET POR LO QUE RESPONDERÁ JSON.
+ probar con postman http://192.168.0.7:8080/periodos/periodos
+

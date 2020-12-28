@@ -1,7 +1,12 @@
 package com.previred.periodos.tools;
 
+import java.io.Console;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Generador de fechas aleatorio
@@ -43,4 +48,15 @@ public class RandomDate {
                 ", minDate=" + minDate +
                 '}';
     }
+    /**
+     * Genera una Lista con las fechas faltantes y totales.
+     * @return 
+     */
+    public List<LocalDate> range(){
+    List<LocalDate> dates = Stream.iterate(minDate, date -> date.plusMonths(1).withDayOfMonth(1))
+    	       .limit(ChronoUnit.MONTHS.between(minDate, maxDate))
+    	       .collect(Collectors.toList());
+    return dates;
+    }
+    
 }
