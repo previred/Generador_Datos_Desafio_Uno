@@ -91,5 +91,7 @@ SOLUCION DESAFIO  JQUEZADA
 // se agrega controlador que invoca servicio y se agrega un método nuevo que genera fechas segun un rango definido.
 
 * EL API ES DE PROTOOLO HTTP GET POR LO QUE RESPONDERÁ JSON.
- probar con postman http://192.168.0.7:8080/periodos/periodos
+swagger
+curl -X GET --header 'Accept: application/json' 'http://127.0.0.1:8080/periodos/periodos'
+http://127.0.0.1:8080/periodos/periodos
 
