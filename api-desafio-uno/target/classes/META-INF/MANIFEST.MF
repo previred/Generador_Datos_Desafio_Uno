@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: aguti
+Build-Jdk: 16.0.2
+Implementation-Title: api-desafio-uno
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: cl.aggl
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/api-desafio-un
+ o/
+Created-By: Maven Integration for Eclipse
+
