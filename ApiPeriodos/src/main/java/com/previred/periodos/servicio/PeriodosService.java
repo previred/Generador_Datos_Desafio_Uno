@@ -3,9 +3,7 @@ package com.previred.periodos.servicio;
 import com.previred.periodos.swagger.codegen.model.Periodo;
 import com.previred.periodos.tools.RandomDate;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,7 +38,7 @@ public class PeriodosService {
 
         Random aleatorio = new Random();
         int cantidadPeriodos = aleatorio.nextInt((MAX - MIN) + 1) + MIN;
-        Set<LocalDate> fechas = new HashSet();
+        Set<LocalDate> fechas = new HashSet<LocalDate>();
         while (fechas.size() <= cantidadPeriodos) {            
             fechas.add(fechaPeriodos.nextDate());
         }

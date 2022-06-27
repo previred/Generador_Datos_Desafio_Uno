@@ -2,15 +2,14 @@ package com.previred.periodos.swagger.codegen.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
+import com.previred.periodos.tools.UtilTransform;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+
 
 /**
  * Periodo
@@ -148,23 +147,25 @@ public class Periodo   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Periodo {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    fechaCreacion: ").append(toIndentedString(fechaCreacion)).append("\n");
-    sb.append("    fechaFin: ").append(toIndentedString(fechaFin)).append("\n");
-    sb.append("    fechas: ").append(toIndentedString(fechas)).append("\n");
+    sb.append("    id: ").append(UtilTransform.toIndentedString(id)).append("\n");
+    sb.append("    fechaCreacion: ").append(UtilTransform.toIndentedString(fechaCreacion)).append("\n");
+    sb.append("    fechaFin: ").append(UtilTransform.toIndentedString(fechaFin)).append("\n");
+    sb.append("    fechas: ").append(UtilTransform.toIndentedString(fechas)).append("\n");
     sb.append("}");
     return sb.toString();
   }
 
   /**
+   * TODO: Este metodo se comenta ya que se inserto en la clase UtilTransfomr.
+   * 
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  /*private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
-  }
+  }*/
 }
 
