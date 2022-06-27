@@ -1,2 +1,8 @@
 ApiPeriodos/target/
+ApiPeriodos/.classpath
+ApiPeriodos/.factorypath
+ApiPeriodos/.project
+ApiPeriodos/.apt_generated/
+ApiPeriodos/.apt_generated_tests/
+ApiPeriodos/.settings/
 swagger-codegen-cli.jar

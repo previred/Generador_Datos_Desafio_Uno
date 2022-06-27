@@ -5,34 +5,35 @@
  */
 package com.previred.periodos.swagger.codegen.api;
 
-import com.previred.periodos.swagger.codegen.model.Periodo;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.annotations.*;
+import java.io.IOException;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.previred.periodos.swagger.codegen.model.Periodo;
+import com.previred.periodos.swagger.codegen.model.PeriodoResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 
 @Api(value = "api", description = "the api API")
 public interface ApiApi {
 
     Logger log = LoggerFactory.getLogger(ApiApi.class);
+   // ApiResponseMessage result=null ;
+    
 
     default Optional<ObjectMapper> getObjectMapper() {
         return Optional.empty();
@@ -41,10 +42,13 @@ public interface ApiApi {
     default Optional<HttpServletRequest> getRequest() {
         return Optional.empty();
     }
+    
 
     default Optional<String> getAcceptHeader() {
         return getRequest().map(r -> r.getHeader("Accept"));
     }
+    
+ 
 
     @ApiOperation(value = "Lista de periodos a procesar", nickname = "periodos", notes = "", response = Periodo.class, tags={ "periodos", })
     @ApiResponses(value = { 
@@ -53,6 +57,7 @@ public interface ApiApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     default ResponseEntity<Periodo> periodos() {
+    	
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
@@ -67,5 +72,56 @@ public interface ApiApi {
         }
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
+    
+    
+   
+    @ApiOperation(value = "Lista de periodos faltantes", nickname = "periodo_Faltantes", notes = "", response = PeriodoResponse.class, tags={ "periodos_Faltantes", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Periodo de fechas faltantes", response = PeriodoResponse.class) })
+    @RequestMapping(value = "/apiPeriodosFaltantes",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<PeriodoResponse> periodosFaltantes (){  
+    	if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+    		if (getAcceptHeader().get().contains("application/json")) {
+    			try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"fechaCreacion\" : \"2000-01-23\",  \"fechas\" : [ \"2000-01-23\", \"2000-01-23\" ],  \"id\" : 0,  \"fechaFin\" : \"2000-01-23\", \"fechasFaltantes\" : [ \"2000-01-23\", \"2000-01-23\" ]}", PeriodoResponse.class), HttpStatus.NOT_IMPLEMENTED );
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+    		}
+    	} else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default ApiApi interface so no example is generated");
+            
+    	}
+    	
+    	System.out.println("LLega aqui DAASASS");    	
+    	return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
 
+    
+    @ExceptionHandler(RuntimeException.class)
+    default ResponseEntity<ApiResponseMessage> metodoRuntimeException (RuntimeException e, HttpServletRequest request) {
+
+    	ApiResponseMessage result = new ApiResponseMessage(1, e.getMessage()) ;
+   			//	"[ApiApiController] -  Not Found " + e.getMessage(), 404, "Error");
+   		return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+   	}
+    
+    @ExceptionHandler(Exception.class)
+    default ResponseEntity<ApiResponseMessage> metodoException (Exception e, HttpServletRequest request  ) {
+    	ApiResponseMessage result = new ApiResponseMessage(1, e.getMessage()) ;
+   		return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+   	}
+    
+    @ExceptionHandler(Throwable.class)
+    default ResponseEntity<ApiResponseMessage> metodoThrowable (Throwable e, HttpServletRequest request   ) {
+    	ApiResponseMessage result = new ApiResponseMessage(1,  e.getMessage()) ;
+   		return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+   	}
+    
+    
+    
+    
 }

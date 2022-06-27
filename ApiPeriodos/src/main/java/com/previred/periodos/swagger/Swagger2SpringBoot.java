@@ -4,15 +4,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+
+import com.previred.periodos.tools.FileProperties;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@EnableConfigurationProperties (FileProperties.class)
 @SpringBootApplication
 @EnableSwagger2
 @ComponentScan(basePackages = { "com.previred.periodos.swagger", 
     "com.previred.periodos.swagger.codegen.api",
-    "com.previred.periodos.servicio"})
+    "com.previred.periodos.servicio",
+    "com.previred.periodos.tools"})
 public class Swagger2SpringBoot implements CommandLineRunner {
 
     @Override
